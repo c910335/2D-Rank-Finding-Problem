@@ -7,9 +7,16 @@ typedef struct {
 } point;
 
 int cmp(const void * a, const void * b) {
-  if ((*(point*)a).x == (*(point*)b).x)
-    return (*(point*)a).y - (*(point*)b).y;
-  return (*(point*)a).x - (*(point*)b).x;
+  if ((*(point*)a).x == (*(point*)b).x) {
+    if ((*(point*)a).y < (*(point*)b).y)
+      return -1;
+    if ((*(point*)a).y == (*(point*)b).y)
+      return 0;
+    return 1;
+  }
+  if ((*(point*)a).x < (*(point*)b).x)
+    return -1;
+  return 1;
 }
 
 int n, ranks[100000];
