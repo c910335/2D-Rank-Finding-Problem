@@ -1,0 +1,9 @@
+language: crystal
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y ruby default-jdk haskell-platform
+
+install: make clean build
+
+script: make test

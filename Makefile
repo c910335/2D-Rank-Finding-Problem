@@ -10,11 +10,11 @@ clean:
 build:
 	mkdir $(BIN_DIR)
 	mkdir $(BUILD_DIR)
-	crystal build --release main.cr -o $(BIN_DIR)/crystal
+	crystal build main.cr -o $(BIN_DIR)/crystal
 	gcc -O2 main.c -o $(BIN_DIR)/c
 	g++ -O2 main.cpp -o $(BIN_DIR)/cpp
 	javac -d $(BIN_DIR) Main.java
-	ghc -O2 -dynamic main.hs -outputdir=$(BUILD_DIR) -o $(BIN_DIR)/haskell
+	ghc -O2 main.hs -outputdir=$(BUILD_DIR) -o $(BIN_DIR)/haskell
 
 test:
 	mkdir $(TMP_DIR)

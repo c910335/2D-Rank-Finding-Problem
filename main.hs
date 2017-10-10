@@ -1,11 +1,11 @@
 {-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE Strict, StrictData #-}
 
 import Data.List
 import Data.Maybe
 import Data.Ord
 import Data.Array.Unboxed
 import Data.Array.ST
+import Control.Applicative
 import Control.Monad
 import Control.Monad.State.Lazy
 import Control.Monad.ST
