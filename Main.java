@@ -34,7 +34,7 @@ public class Main {
       });
 
       // Find rank recursively
-      points = findRank(points);
+      findRank(points);
 
       // Output the result
       System.out.print(ranks[0]);
