@@ -1,2 +1,16 @@
+# Executables
 main
+crystal
+c
+cpp
+haskell
+
+# Output
+*.out
+
+# Java
 *.class
+
+# Haskell
+*.hi
+*.o
