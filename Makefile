@@ -21,13 +21,15 @@ test:
 	crystal generate_test_data.cr > $(TMP_DIR)/test_data.in
 	$(BIN_DIR)/crystal < $(TMP_DIR)/test_data.in > $(TMP_DIR)/crystal.out
 	ruby main.rb < $(TMP_DIR)/test_data.in > $(TMP_DIR)/ruby.out
-	@cmp $(TMP_DIR)/crystal.out $(TMP_DIR)/ruby.out || (echo "Failed" && exit 1)
+	@cmp $(TMP_DIR)/crystal.out $(TMP_DIR)/ruby.out || (echo "Failed: Ruby" && exit 1)
 	$(BIN_DIR)/c < $(TMP_DIR)/test_data.in > $(TMP_DIR)/c.out
-	@cmp $(TMP_DIR)/crystal.out $(TMP_DIR)/c.out || (echo "Failed" && exit 1)
+	@cmp $(TMP_DIR)/crystal.out $(TMP_DIR)/c.out || (echo "Failed: C" && exit 1)
 	$(BIN_DIR)/cpp < $(TMP_DIR)/test_data.in > $(TMP_DIR)/cpp.out
-	@cmp $(TMP_DIR)/crystal.out $(TMP_DIR)/cpp.out || (echo "Failed" && exit 1)
+	@cmp $(TMP_DIR)/crystal.out $(TMP_DIR)/cpp.out || (echo "Failed: C++" && exit 1)
 	java -cp $(BIN_DIR) Main < $(TMP_DIR)/test_data.in > $(TMP_DIR)/java.out
-	@cmp $(TMP_DIR)/crystal.out $(TMP_DIR)/java.out || (echo "Failed" && exit 1)
+	@cmp $(TMP_DIR)/crystal.out $(TMP_DIR)/java.out || (echo "Failed: Java" && exit 1)
 	$(BIN_DIR)/haskell < $(TMP_DIR)/test_data.in > $(TMP_DIR)/haskell.out
-	@cmp $(TMP_DIR)/crystal.out $(TMP_DIR)/haskell.out || (echo "Failed" && exit 1)
+	@cmp $(TMP_DIR)/crystal.out $(TMP_DIR)/haskell.out || (echo "Failed: Haskell" && exit 1)
+	python3 main.py < $(TMP_DIR)/test_data.in > $(TMP_DIR)/python3.out
+	@cmp $(TMP_DIR)/crystal.out $(TMP_DIR)/python3.out || (echo "Failed: Python3" && exit 1)
 	@echo "Passed"
