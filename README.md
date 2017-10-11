@@ -1,15 +1,26 @@
 # 2D Rank Finding Problem
 
+[![Build Status](https://travis-ci.org/c910335/2D-Rank-Finding-Problem.svg?branch=master)](https://travis-ci.org/c910335/2D-Rank-Finding-Problem)
+
 Solve 2D Rank Finding Problem in Several Languages
 
-## Description
+## Languages
+
+- Crystal
+- Ruby
+- C
+- C++
+- Java
+- Haskell
+
+## Problem
 
 - P<sub>i</sub>(x<sub>i</sub>, y<sub>i</sub>) **dominates** P<sub>j</sub>(x<sub>j</sub>, y<sub>j</sub>) iff x<sub>i</sub> ≥ x<sub>j</sub> and y<sub>i</sub> ≥ y<sub>j</sub>
 - Given a set of points, the **rank** of a point is the number of points dominated by it.
 
 Design a program to find the rank of each point.
 
-## Input
+### Input
 
 Input consists several test cases.
 
@@ -23,11 +34,11 @@ The input ends with a zero for n.
 - n ∈ N
 - x, y ∈ Z
 
-## Output
+### Output
 
 Your output should consist of a single line for each test case containing n numbers, the rank of each point.
 
-## Sample Input
+### Sample Input
 
 ```
 5
@@ -47,9 +58,23 @@ Your output should consist of a single line for each test case containing n numb
 0
 ```
 
-## Sample Output
+### Sample Output
 
 ```
 0 0 0 1 2
 4 2 5 0 5 0 3
 ```
+
+## Contributing
+
+1. Fork it ( https://github.com/c910335/2D-Rank-Finding-Problem/fork )
+2. Create your feature branch (git checkout -b add-new-language)
+3. Commit your changes (git commit -am 'add new language')
+4. Push to the branch (git push origin add-new-language)
+5. Create a new Pull Request
+
+## Contributors
+
+- [c910335](https://github.com/c910335) Tatsujin Chin - creator, maintainer
+- [scps940707](https://github.com/scps940707) YyWang - Java
+- [sifmelcara](https://github.com/sifmelcara) mingchuan - Haskell
