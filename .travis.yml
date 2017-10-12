@@ -2,7 +2,7 @@ language: crystal
 
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install -y ruby default-jdk haskell-platform
+  - sudo apt-get install -y ruby default-jdk haskell-platform python3
 
 install: make clean build
 

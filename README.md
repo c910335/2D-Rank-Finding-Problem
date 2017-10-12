@@ -12,6 +12,7 @@ Solve 2D Rank Finding Problem in Several Languages
 - C++
 - Java
 - Haskell
+- Python 3
 
 ## Problem
 
@@ -78,3 +79,4 @@ Your output should consist of a single line for each test case containing n numb
 - [c910335](https://github.com/c910335) Tatsujin Chin - creator, maintainer
 - [scps940707](https://github.com/scps940707) YyWang - Java
 - [sifmelcara](https://github.com/sifmelcara) mingchuan - Haskell
+- [chuanchan1116](https://github.com/chuanchan1116) William Tsai - Python 3
