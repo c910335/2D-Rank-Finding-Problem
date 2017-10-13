@@ -15,6 +15,7 @@ build:
 	g++ -O2 main.cpp -o $(BIN_DIR)/cpp
 	javac -d $(BIN_DIR) Main.java
 	ghc -O2 main.hs -outputdir=$(BUILD_DIR) -o $(BIN_DIR)/haskell
+	kotlinc main.kt -include-runtime -d $(BIN_DIR)/kotlin.jar
 
 test:
 	mkdir $(TMP_DIR)
@@ -32,4 +33,6 @@ test:
 	@cmp $(TMP_DIR)/crystal.out $(TMP_DIR)/haskell.out || (echo "Failed: Haskell" && exit 1)
 	python3 main.py < $(TMP_DIR)/test_data.in > $(TMP_DIR)/python3.out
 	@cmp $(TMP_DIR)/crystal.out $(TMP_DIR)/python3.out || (echo "Failed: Python3" && exit 1)
+	java -jar $(BIN_DIR)/kotlin.jar < $(TMP_DIR)/test_data.in > $(TMP_DIR)/kotlin.out
+	@cmp $(TMP_DIR)/crystal.out $(TMP_DIR)/kotlin.out || (echo "Failed: Kotlin" && exit 1)
 	@echo "Passed"

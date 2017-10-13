@@ -80,3 +80,4 @@ Your output should consist of a single line for each test case containing n numb
 - [scps940707](https://github.com/scps940707) YyWang - Java
 - [sifmelcara](https://github.com/sifmelcara) mingchuan - Haskell
 - [chuanchan1116](https://github.com/chuanchan1116) William Tsai - Python 3
+- [david50407](https://github.com/david50407) David Kuo - Kotlin
