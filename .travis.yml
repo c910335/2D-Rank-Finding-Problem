@@ -3,6 +3,9 @@ language: crystal
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y ruby default-jdk haskell-platform python3
+  - wget http://www.lua.org/ftp/lua-5.3.4.tar.gz
+  - tar -zxv -f lua-5.3.4.tar.gz
+  - pushd lua-5.3.4 && make CFLAGS="-O2 -fPIC -DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" linux && sudo make INSTALL_TOP=/usr install && popd
 
 install: make clean build
 

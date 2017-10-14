@@ -15,6 +15,7 @@ build:
 	g++ -O2 main.cpp -o $(BIN_DIR)/cpp
 	javac -d $(BIN_DIR) Main.java
 	ghc -O2 main.hs -outputdir=$(BUILD_DIR) -o $(BIN_DIR)/haskell
+	luac -o $(BIN_DIR)/lua main.lua
 
 test:
 	mkdir $(TMP_DIR)
@@ -32,4 +33,6 @@ test:
 	@cmp $(TMP_DIR)/crystal.out $(TMP_DIR)/haskell.out || (echo "Failed: Haskell" && exit 1)
 	python3 main.py < $(TMP_DIR)/test_data.in > $(TMP_DIR)/python3.out
 	@cmp $(TMP_DIR)/crystal.out $(TMP_DIR)/python3.out || (echo "Failed: Python3" && exit 1)
+	lua $(BIN_DIR)/lua < $(TMP_DIR)/test_data.in > $(TMP_DIR)/lua.out
+	@cmp $(TMP_DIR)/crystal.out $(TMP_DIR)/lua.out || (echo "Failed: Lua" && exit 1)
 	@echo "Passed"
