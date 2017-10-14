@@ -1,10 +1,12 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#define THRESHOLD 60
 
 using std::cin;
 using std::cout;
 using std::endl;
 using std::sort;
+using std::copy_backward;
 
 class point {
 public:
@@ -21,8 +23,25 @@ int n, ranks[100000];
 point ps[100000];
 
 void find_ranks(int first, int last) {
-  if (last - first < 2)
+  if (last - first <= THRESHOLD) {
+    int i, j;
+    point tp;
+    for (i = first + 1; i < last; ++i) {
+      tp = ps[i];
+      if (ps[i].y < ps[first].y) {
+        copy_backward(ps + first, ps + i, ps + i + 1);
+        ps[first] = tp;
+        continue;
+      }
+      for (j = i - 1;; --j)
+        if (ps[i].y >= ps[j].y)
+          break;
+      copy_backward(ps + j + 1, ps + i, ps + i + 1);
+      ps[j + 1] = tp;
+      ranks[tp.i] += j - first + 1;
+    }
     return;
+  }
 
   int mid = (first + last) / 2;
   find_ranks(first, mid);
