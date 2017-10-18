@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define THRESHOLD 40
 
 typedef struct {
   int i, x, y;
@@ -22,9 +23,30 @@ int cmp(const void * a, const void * b) {
 int n, ranks[100000];
 point ps[100000];
 
+void move(int src, int dst) {
+  point tp = ps[src];
+  int i;
+  for (i = src; i > dst; --i)
+    ps[i] = ps[i - 1];
+  ps[dst] = tp;
+}
+
 void find_ranks(int first, int last) {
-  if (last - first < 2)
+  if (last - first <= THRESHOLD) {
+    int i, j;
+    for (i = first + 1; i < last; ++i) {
+      if (ps[i].y < ps[first].y) {
+        move(i, first);
+        continue;
+      }
+      for (j = i - 1;; --j)
+        if (ps[i].y >= ps[j].y)
+          break;
+      move(i, j + 1);
+      ranks[ps[j + 1].i] += j - first + 1;
+    }
     return;
+  }
 
   int mid = (first + last) / 2;
   find_ranks(first, mid);
@@ -57,7 +79,7 @@ void find_ranks(int first, int last) {
   free(tps);
 }
 
-int main() {
+int main(int argc, char *args[]) {
   for(;;) {
     scanf("%d", &n);
     if (n == 0)
