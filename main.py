@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-
 global rank
+THRESHOLD = 20
 
 class Point:
     def __init__(self, i, p):
@@ -8,7 +8,14 @@ class Point:
         self.x, self.y = p
 
 def findRank(p):
-    if len(p) <= 1:
+    if len(p) <= THRESHOLD:
+        for i in range(1, len(p)):
+            v, j = p[i], i
+            while j > 0 and p[j-1].y > v.y:
+                p[j] = p[j-1]
+                j -= 1
+            p[j] = v
+            rank[v.i] += j
         return p
     i, li, ri = 0, 0, 0
     l = findRank(p[:int(len(p)/2)])
@@ -33,6 +40,7 @@ def findRank(p):
         i += 1
     return p
 
+
 while True:
     n = int(input())
     if n == 0:
@@ -44,3 +52,4 @@ while True:
     point.sort(key=lambda p: (p.x, p.y))
     findRank(point)
     print(' '.join(map(str, rank)))
+
