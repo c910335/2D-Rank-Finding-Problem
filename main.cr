@@ -1,3 +1,5 @@
+THRESHOLD = 23
+
 module Answer
   class_property! ranks : Array(Int32)
 end
@@ -7,7 +9,28 @@ class Point
 end
 
 def find_ranks(ps : Array(Point), first : Int32, last : Int32)
-  return if last - first < 2
+  if last - first <= THRESHOLD
+    ((first + 1)...last).each do |i|
+      tp = ps[i]
+      if ps[i].y < ps[first].y
+        ps[(first + 1)..i] = ps[first...i]
+        ps[first] = tp
+        next
+      end
+      j = i
+      loop do
+        break if ps[i].y >= ps[j - 1].y
+        j -= 1
+      end
+      if j < i
+        ps[(j + 1)..i] = ps[j...i]
+        ps[j] = tp
+      end
+      Answer.ranks[tp.i] += j - first
+    end
+    return
+  end
+
   mid = (first + last) / 2
   find_ranks(ps, first, mid)
   find_ranks(ps, mid, last)
