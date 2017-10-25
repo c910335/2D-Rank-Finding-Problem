@@ -4,12 +4,12 @@ class Point
   attr_accessor :i, :x, :y
 end
 
-def find_ranks ps, first, last
-  if last - first <= THRESHOLD
-    ((first + 1)...last).each do |i|
+def find_ranks ps
+  if ps.size <= THRESHOLD
+    (1...ps.size).each do |i|
       tp = ps.delete_at(i)
-      if tp.y < ps[first].y
-        ps.insert(first, tp)
+      if tp.y < ps[0].y
+        ps.unshift(tp)
         next
       end
       j = i
@@ -18,36 +18,38 @@ def find_ranks ps, first, last
         j -= 1
       end
       ps.insert(j, tp)
-      $ranks[tp.i] += j - first
+      $ranks[tp.i] += j
     end
-    return
+    return ps
   end
-  mid = (first + last) / 2
-  find_ranks(ps, first, mid)
-  find_ranks(ps, mid, last)
 
-  tps, i, j, k = ps[first...mid], first, 0, mid
+  mid = ps.size / 2
+  left = find_ranks(ps[0...mid])
+  right = find_ranks(ps[mid..-1])
+  ps = []
+
+  count = 0
   loop do
-    if tps[j].y <= ps[k].y
-      ps[i] = tps[j]
-      j += 1
-      if j >= tps.size
-        ps[k...last].each do |p|
-          $ranks[p.i] += j
+    if left.first.y <= right.first.y
+      ps << left.shift
+      count += 1
+      if left.empty?
+        right.each do |p|
+          $ranks[p.i] += count
         end
+        ps += right
         break
       end
     else
-      ps[i] = ps[k]
-      $ranks[ps[k].i] += j
-      k += 1
-      if k >= last
-        ps[(i + 1)...last] = tps[j..-1]
+      $ranks[right.first.i] += count
+      ps << right.shift
+      if right.empty?
+        ps += left
         break
       end
     end
-    i += 1
   end
+  return ps
 end
 
 loop do
@@ -65,7 +67,7 @@ loop do
     a.x <=> b.x
   end
 
-  find_ranks(ps, 0, n)
+  find_ranks(ps)
 
   puts $ranks.join(' ')
 end
