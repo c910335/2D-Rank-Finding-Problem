@@ -1,4 +1,4 @@
-THRESHOLD = 171
+THRESHOLD = 20
 
 class Point
   attr_accessor :i, :x, :y
