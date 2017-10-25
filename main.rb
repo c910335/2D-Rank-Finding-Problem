@@ -1,9 +1,27 @@
+THRESHOLD = 171
+
 class Point
   attr_accessor :i, :x, :y
 end
 
 def find_ranks ps, first, last
-  return if last - first < 2
+  if last - first <= THRESHOLD
+    ((first + 1)...last).each do |i|
+      tp = ps.delete_at(i)
+      if tp.y < ps[first].y
+        ps.insert(first, tp)
+        next
+      end
+      j = i
+      loop do
+        break if tp.y >= ps[j - 1].y
+        j -= 1
+      end
+      ps.insert(j, tp)
+      $ranks[tp.i] += j - first
+    end
+    return
+  end
   mid = (first + last) / 2
   find_ranks(ps, first, mid)
   find_ranks(ps, mid, last)
