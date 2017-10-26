@@ -13,6 +13,7 @@ Solve 2D Rank Finding Problem in Several Languages
 - Java
 - Haskell
 - Python 3
+- C#
 
 ## Problem
 
@@ -80,3 +81,4 @@ Your output should consist of a single line for each test case containing n numb
 - [scps940707](https://github.com/scps940707) YyWang - Java
 - [sifmelcara](https://github.com/sifmelcara) mingchuan - Haskell
 - [chuanchan1116](https://github.com/chuanchan1116) William Tsai - Python 3
+- [sharknevercries](https://github.com/sharknevercries) ZhengYuan Lee - C#
