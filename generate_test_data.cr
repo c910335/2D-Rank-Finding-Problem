@@ -9,7 +9,7 @@ module PHW1
 
   def self.print_test_case(n, limit)
     puts n
-    pm = Set(Tuple(Int64,Int64)).new
+    pm = Set(Tuple(Int64, Int64)).new
     while n > 0
       xy = {random.rand((-limit)...limit), random.rand((-limit)...limit)}
       next if pm.includes? xy
