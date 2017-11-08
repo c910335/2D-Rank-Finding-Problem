@@ -6,57 +6,62 @@ import java.util.Scanner;
 
 public class Main {
 
-  static int[] ranks;
+  private static final int THRESHOLD = 32;
+  private static int[] ranks;
 
   public static void main(String[] args) {
-    Scanner scn = new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in);
 
-    while(true) {
-      int n = scn.nextInt();
+    for(;;) {
+      int n = scanner.nextInt();
       if(n == 0) {
-        scn.close();
+        scanner.close();
         return;
       }
 
       ranks = new int[n];
       List<Point> points = new LinkedList<Point>();
-      for(int i=0; i<n; i++) {
-        int x = scn.nextInt();
-        int y = scn.nextInt();
-        points.add(new Point(i, x, y));
-      }
+      for(int i = 0; i < n; i++)
+        points.add(new Point(i, scanner.nextInt(), scanner.nextInt()));
 
       // Sort points from small to large
       Collections.sort(points, new Comparator<Point>() {
         @Override
         public int compare(Point p1, Point p2) {
-          if(p1.x == p2.x) {
+          if(p1.x == p2.x)
             return Integer.compare(p1.y, p2.y);
-          }
           return Integer.compare(p1.x, p2.x);
         }
       });
 
       // Find rank recursively
-      points = findRank(points);
+      findRank(points);
 
       // Output the result
       System.out.print(ranks[0]);
-      for(int i=1; i<n; i++) {
+      for(int i = 1; i < n; i++)
         System.out.print(" " + ranks[i]);
-      }
       System.out.println();
     }
   }
 
-  static List<Point> findRank(List<Point> points) {
-    // Termination condition of the split
-    if(points.size() <= 1) {
+  private static List<Point> findRank(List<Point> points) {
+    // If size of points is small enough, sort them by insertion sort, and update their ranks
+    if(points.size() <= THRESHOLD) {
+      for(int i=1, j; i<points.size(); i++) {
+        Point temp = points.get(i);
+        for(j=i-1; j>=0 && points.get(j).isGreater(temp); j--) {
+          points.set(j+1, points.get(j));
+        }
+        ranks[temp.index] += j+1;
+        points.set(j+1, temp);
+      }
+
       return points;
     }
 
-    List<Point> leftPoints = new LinkedList<Point>(points.subList(0, points.size()/2));
-    List<Point> rightPoints = new LinkedList<Point>(points.subList(points.size()/2, points.size()));
+    List<Point> leftPoints = new LinkedList<Point>(points.subList(0, points.size() / 2));
+    List<Point> rightPoints = new LinkedList<Point>(points.subList(points.size() / 2, points.size()));
 
     // Find rank recursively
     leftPoints = findRank(leftPoints);
@@ -65,12 +70,12 @@ public class Main {
     // Merge left and right parts of points, and calculate the ranks
     List<Point> result = new LinkedList<Point>();
     int leftCount = 0;
-    while(!leftPoints.isEmpty() && !rightPoints.isEmpty()) {
+    while(!(leftPoints.isEmpty() || rightPoints.isEmpty())) {
       Point point;
       if(rightPoints.get(0).isGreater(leftPoints.get(0))) {
         point = leftPoints.remove(0);
         result.add(point);
-        leftCount ++;
+        leftCount++;
       }
       else {
         point = rightPoints.remove(0);
@@ -81,7 +86,7 @@ public class Main {
 
     for (Point point : leftPoints) {
       result.add(point);
-      leftCount ++;
+      leftCount++;
     }
     for (Point point : rightPoints) {
       ranks[point.index] += leftCount;
