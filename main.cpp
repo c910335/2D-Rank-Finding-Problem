@@ -1,100 +1,146 @@
-#include <algorithm>
-#include <iostream>
-#define THRESHOLD 60
+// ConsoleApplication2.cpp: 定义控制台应用程序的入口点。
+//
 
-using std::cin;
-using std::cout;
-using std::endl;
-using std::sort;
-using std::copy_backward;
+#include<iostream>
+#include<algorithm>
+using namespace std;
 
-class point {
+class Point {
 public:
-  int i, x, y;
+	Point() {
+		x = y = rank = 0;
+	}
+public:
+	char direction;
+	int x;
+	int y;
+	int idx;
+	int rank;
 };
-
-bool cmp(point a, point b) {
-  if (a.x == b.x)
-    return a.y < b.y;
-  return a.x < b.x;
+bool dominate(Point p1, Point p2) {
+	if (p1.x > p2.x && p1.y > p2.y) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
-int n, ranks[100000];
-point ps[100000];
+bool cmp1(Point p1, Point p2) {
+	if (p1.x>p2.x)
+		return false;
+	else
+		return true;
+}
 
-void find_ranks(int first, int last) {
-  if (last - first <= THRESHOLD) {
-    int i, j;
-    point tp;
-    for (i = first + 1; i < last; ++i) {
-      tp = ps[i];
-      if (ps[i].y < ps[first].y) {
-        copy_backward(ps + first, ps + i, ps + i + 1);
-        ps[first] = tp;
-        continue;
-      }
-      for (j = i - 1;; --j)
-        if (ps[i].y >= ps[j].y)
-          break;
-      copy_backward(ps + j + 1, ps + i, ps + i + 1);
-      ps[j + 1] = tp;
-      ranks[tp.i] += j - first + 1;
-    }
-    return;
-  }
+bool cmp2(Point p1, Point p2) {
+	if (p1.y>=p2.y)
+		return false;
+	else
+		return true;
+}
 
-  int mid = (first + last) / 2;
-  find_ranks(first, mid);
-  find_ranks(mid, last);
+bool idxcmp(Point p1, Point p2) {
+	if (p1.idx < p2.idx)
+		return true;
+	else
+		return false;
+}
+void rank_finding1(Point p[],int l, int r) {
+	for (int i = l;i<r;i++) {
+		for (int j = l;j<r;j++) {
+			if (dominate(p[i], p[j])) {
+				p[i].rank++;
+			}
+		}
+	}
+}
 
-  int i, j = 0, k = mid, size = mid - first;
-  point *tps = new point[size];
-  for (i = 0; i != size; ++i)
-    tps[i] = ps[i + first];
-  
-  for(i = first;; ++i) {
-    if (tps[j].y <= ps[k].y) {
-      ps[i] = tps[j++];
-      if (j == size) {
-        for (; k != last; ++k)
-          ranks[ps[k].i] += j;
-        break;
-      }
-    } else {
-      ps[i] = ps[k];
-      ranks[ps[k].i] += j;
-      k++;
-      if (k == last) {
-        for (++i; i != last; ++i, ++j)
-          ps[i] = tps[j];
-        break;
-      }
-    }
-  }
-  delete[] tps;
+void devide(Point p[20], int l, int r) {
+	if(r-l > 1){
+		double sum = 0;	
+		int c = 0;
+		int mid = (r + l) / 2;
+		int ave = p[mid].x;
+		devide(p, l, mid);
+		devide(p, mid, r);
+
+		for (int i = l;i < r;i++) {
+	
+			if (p[i].x < ave) {
+				p[i].direction = 'l';
+			}
+			else {
+				p[i].direction = 'r';
+			}
+		}
+		sort(p + l, p + r, cmp2);
+		int cnt = 0;
+		for (int i = l;i < r;i++) {
+			if (p[i].direction == 'l')
+				cnt++;
+			else {
+				p[i].rank += cnt;
+			}
+		}
+	}
+	else {
+		return;
+	}
+}
+
+void rank_finding2(Point p[], int n) {
+	sort(p, p + n,cmp1);
+	devide(p,0,n);
+	sort(p, p + n, idxcmp);
 }
 
 int main() {
-  std::ios_base::sync_with_stdio(false);
-  for(;;) {
-    cin >> n;
-    if (n == 0)
-      return 0;
 
-    int i;
-    for (i = 0; i != n; ++i) {
-      cin >> ps[i].x >> ps[i].y;
-      ps[i].i = i;
-      ranks[i] = 0;
-    }
+	int n;
+	Point p[20];
+	while (cin >> n && n != 0) {
+		for (int i = 0;i<n;i++) {
+			cin >> p[i].x;
+			cin >> p[i].y;
+			p[i].idx = i;
+			p[i].rank = 0;
+		}
 
-    sort(ps, ps + n, cmp);
+		//rank_finding1(p, n); brute froce compare
 
-    find_ranks(0, n);
+		//devide & conquer
+		rank_finding2(p, n);
 
-    cout << ranks[0];
-    for (i = 1; i != n; ++i)
-      cout << ' ' << ranks[i];
-    cout << endl;
-  }
+		for (int i = 0;i<n;i++) {
+			cout << p[i].rank << " ";
+		}
+		cout << endl;
+	}
 }
+
+/*
+input
+5
+1 4
+6 2
+8 0
+2 7
+7 5
+7
+1 2
+-3 -4
+5 6
+-7 -8
+3 7
+-5 -9
+0 0
+0
+*/
+
+/*
+output
+0 0 0 1 2
+4 2 5 0 5 0 3
+*/
+
