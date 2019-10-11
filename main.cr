@@ -31,7 +31,7 @@ def find_ranks(ps : Array(Point), first : Int32, last : Int32)
     return
   end
 
-  mid = (first + last) / 2
+  mid = (first + last) // 2
   find_ranks(ps, first, mid)
   find_ranks(ps, mid, last)
 
