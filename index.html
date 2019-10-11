@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>2D Rank Finding Problem</title>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <script src="./js/jquery-3.4.1.min.js"></script>
+  <script src="./js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/script.js" defer="true"></script>
+</head>
+
+<body>
+  <div class="container">
+    <h1 id="title" class="display-4">2D Rank Finding Problem</h1>
+    <p class="text-center">預設測資取自: <a
+        href="https://zerojudge.tw/ShowProblem?problemid=d847">https://zerojudge.tw/ShowProblem?problemid=d847</a></p>
+    <br>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">測資數量</span>
+      </div>
+      <input id="N" type="number" class="form-control" value="5">
+    </div>
+    <div class="btn-group  btn-lg btn-block" role="group">
+      <button type="button" class="btn btn-success" onclick="makePoints()">產生測資</button>
+      <button type="button" class="btn btn-primary" onclick="start()">執行</button>
+    </div>
+    <div id="result" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">執行結果</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body container">
+            <div class="row justify-content-center">
+              <canvas id="result_img"></canvas>
+
+            </div>
+            <br>
+            <div class="row">
+              <table id="result_table" class="table text-center">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">X</th>
+                    <th scope="col">Y</th>
+                    <th scope="col">Rank</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">關閉</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <table id="input" class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">X</th>
+          <th scope="col">Y</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td><input type="text" class="form-control" value="961"></td>
+          <td><input type="text" class="form-control" value="404"></td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td><input type="text" class="form-control" value="640"></td>
+          <td><input type="text" class="form-control" value="145"></td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td><input type="text" class="form-control" value="983"></td>
+          <td><input type="text" class="form-control" value="888"></td>
+        </tr>
+        <tr>
+          <th scope="row">4</th>
+          <td><input type="text" class="form-control" value="539"></td>
+          <td><input type="text" class="form-control" value="71"></td>
+        </tr>
+        <tr>
+          <th scope="row">5</th>
+          <td><input type="text" class="form-control" value="437"></td>
+          <td><input type="text" class="form-control" value="532"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>
