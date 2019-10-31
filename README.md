@@ -1,6 +1,6 @@
 # 2D Rank Finding Problem
 
-[![Build Status](https://travis-ci.org/c910335/2D-Rank-Finding-Problem.svg?branch=master)](https://travis-ci.org/c910335/2D-Rank-Finding-Problem)
+[![Build Status](https://travis-ci.com/c910335/2D-Rank-Finding-Problem.svg?branch=master)](https://travis-ci.com/c910335/2D-Rank-Finding-Problem)
 
 Solve 2D Rank Finding Problem in Several Languages
 
