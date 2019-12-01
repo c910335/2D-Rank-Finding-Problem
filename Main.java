@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Main {
 
+  private static final int THRESHOLD = 32;
   private static int[] ranks;
 
   public static void main(String[] args) {
@@ -45,9 +46,19 @@ public class Main {
   }
 
   private static List<Point> findRank(List<Point> points) {
-    // Termination condition of the split
-    if(points.size() <= 1)
+    // If size of points is small enough, sort them by insertion sort, and update their ranks
+    if(points.size() <= THRESHOLD) {
+      for(int i=1, j; i<points.size(); i++) {
+        Point temp = points.get(i);
+        for(j=i-1; j>=0 && points.get(j).isGreater(temp); j--) {
+          points.set(j+1, points.get(j));
+        }
+        ranks[temp.index] += j+1;
+        points.set(j+1, temp);
+      }
+
       return points;
+    }
 
     List<Point> leftPoints = new LinkedList<Point>(points.subList(0, points.size() / 2));
     List<Point> rightPoints = new LinkedList<Point>(points.subList(points.size() / 2, points.size()));
