@@ -16,6 +16,7 @@ build:
 	javac -d $(BIN_DIR) Main.java
 	ghc -O2 main.hs -outputdir=$(BUILD_DIR) -o $(BIN_DIR)/haskell
 	mcs main.cs -out:bin/csharp -optimize+
+	go build -o $(BIN_DIR)/go main.go
 
 test:
 	mkdir $(TMP_DIR)
@@ -35,4 +36,6 @@ test:
 	@cmp $(TMP_DIR)/crystal.out $(TMP_DIR)/python3.out || (echo "Failed: Python3" && exit 1)
 	bin/csharp < tmp/test_data.in > tmp/csharp.out
 	@cmp $(TMP_DIR)/crystal.out $(TMP_DIR)/csharp.out || (echo "Failed: C#" && exit 1)
+	$(BIN_DIR)/go < $(TMP_DIR)/test_data.in > $(TMP_DIR)/go.out
+	@cmp $(TMP_DIR)/crystal.out $(TMP_DIR)/go.out || (echo "Failed: Go" && exit 1)
 	@echo "Passed"
